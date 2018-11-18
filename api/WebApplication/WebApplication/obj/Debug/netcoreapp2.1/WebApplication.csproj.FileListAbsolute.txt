@@ -1,0 +1,15 @@
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.csproj.CoreCompileInputs.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.AssemblyInfoInputs.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.AssemblyInfo.cs
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.deps.json
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.runtimeconfig.json
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.runtimeconfig.dev.json
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\bin\Debug\netcoreapp2.1\WebApplication.pdb
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.csprojAssemblyReference.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.RazorAssemblyInfo.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.RazorAssemblyInfo.cs
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.RazorTargetAssemblyInfo.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\WebApplication\obj\Debug\netcoreapp2.1\WebApplication.pdb
