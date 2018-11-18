@@ -46,6 +46,27 @@ namespace WebApplication.Controllers
             return Ok(media);
         }
 
+        // GET: api/Media/Uploader/5
+        [Route("Uploader")]
+        [HttpGet]
+        public async Task<IActionResult> GetMediabyUploader([FromQuery] string uploader)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var media = (from m in _context.Media where (m.Uploader==uploader) select m ).Distinct();
+
+            var returned = await media.ToListAsync();
+
+            if (returned == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(returned);
+        }
+
         // PUT: api/Media/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMedia([FromRoute] int id, [FromBody] Media media)
