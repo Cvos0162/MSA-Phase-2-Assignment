@@ -46,7 +46,7 @@ namespace WebApplication.Controllers
             return Ok(media);
         }
 
-        // GET: api/Media/Uploader/5
+        // GET: api/Media/Uploader
         [Route("Uploader")]
         [HttpGet]
         public async Task<IActionResult> GetMediabyUploader([FromQuery] string uploader)

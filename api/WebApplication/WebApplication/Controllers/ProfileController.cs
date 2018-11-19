@@ -46,6 +46,27 @@ namespace WebApplication.Controllers
             return Ok(profile);
         }
 
+        // GET: api/Media/username
+        [Route("username")]
+        [HttpGet]
+        public async Task<IActionResult> GetProfilebyUsername([FromQuery] string username)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var media = (from p in _context.Profile where (p.Username == username) select p).Distinct();
+
+            var returned = await media.ToListAsync();
+
+            if (returned == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(returned);
+        }
+
         // PUT: api/Profiles/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProfile([FromRoute] int id, [FromBody] Profile profile)
