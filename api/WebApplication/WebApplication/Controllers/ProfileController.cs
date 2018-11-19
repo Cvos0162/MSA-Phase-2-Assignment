@@ -53,9 +53,8 @@ namespace WebApplication.Controllers
             return Ok(profile);
         }
 
-        // GET: api/Media/username
-        [Route("username")]
-        [HttpGet]
+        // GET: api/Profile
+        [HttpGet("by")]
         public async Task<IActionResult> GetProfilebyUsername([FromQuery] string username)
         {
             if (!ModelState.IsValid)

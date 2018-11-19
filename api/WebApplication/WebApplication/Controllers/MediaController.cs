@@ -54,8 +54,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: api/Media/Uploader
-        [Route("Uploader")]
-        [HttpGet]
+        [HttpGet("by")]
         public async Task<IActionResult> GetMediabyUploader([FromQuery] string uploader)
         {
             if (!ModelState.IsValid)
