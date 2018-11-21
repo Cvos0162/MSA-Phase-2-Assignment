@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication.Models;
 
-namespace WebApplication.Migrations
+namespace WebApplication.Migrations.Profile
 {
     [DbContext(typeof(ProfileContext))]
     partial class ProfileContextModelSnapshot : ModelSnapshot

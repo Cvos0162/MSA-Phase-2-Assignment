@@ -11,6 +11,7 @@ namespace WebApplication.Models
         public string Uploader { get; set; }
         public string Title { get; set; }
         public string Discription { get; set; }
+        public int Like { get; set; }
         public string Url { get; set; }
         public string Uploaded { get; set; }
         public string Width { get; set; }

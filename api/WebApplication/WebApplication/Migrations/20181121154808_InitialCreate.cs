@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebApplication.Migrations.Media
+namespace WebApplication.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -15,6 +15,7 @@ namespace WebApplication.Migrations.Media
                     Uploader = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Discription = table.Column<string>(nullable: true),
+                    Like = table.Column<int>(nullable: false),
                     Url = table.Column<string>(nullable: true),
                     Uploaded = table.Column<string>(nullable: true),
                     Width = table.Column<string>(nullable: true),

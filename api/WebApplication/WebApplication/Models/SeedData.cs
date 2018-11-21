@@ -24,6 +24,7 @@ namespace WebApplication.Models
                         Title = "Ryu",
                         Uploader = "cookys0162",
                         Discription = "from Street Fighter",
+                        Like = 2,
                         Url = "https://upload.wikimedia.org/wikipedia/en/thumb/e/e5/Ryu_TvC.png/220px-Ryu_TvC.png",
                         Uploaded = DateTime.UtcNow.ToString(),
                         Width = "220px",

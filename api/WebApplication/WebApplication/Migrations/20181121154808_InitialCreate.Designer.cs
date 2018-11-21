@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication.Models;
 
-namespace WebApplication.Migrations.Media
+namespace WebApplication.Migrations
 {
     [DbContext(typeof(MediaContext))]
-    [Migration("20181121024503_InitialCreate")]
+    [Migration("20181121154808_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,8 @@ namespace WebApplication.Migrations.Media
                     b.Property<string>("Discription");
 
                     b.Property<string>("Height");
+
+                    b.Property<int>("Like");
 
                     b.Property<string>("Title");
 

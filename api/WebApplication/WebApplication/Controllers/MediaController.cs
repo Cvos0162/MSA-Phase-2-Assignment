@@ -55,13 +55,51 @@ namespace WebApplication.Controllers
 
         // GET: api/Media/Uploader
         [HttpGet("by")]
-        public async Task<IActionResult> GetMediabyUploader([FromQuery] string uploader)
+        public async Task<IActionResult> GetMediabyUploader([FromQuery] string uploader, [FromQuery] int skip, [FromQuery] int take)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var media = (from m in _context.Media where (m.Uploader==uploader) select m ).Distinct();
+            var media = (from m in _context.Media where (m.Uploader==uploader) orderby m.Uploaded descending select m ).Skip(skip).Take(take);
+
+            var returned = await media.ToListAsync();
+
+            if (returned == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(returned);
+        }
+
+        [HttpGet("latest")]
+        public async Task<IActionResult> GetMediabyLatest([FromQuery] int skip, [FromQuery] int take)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var media = (from m in _context.Media orderby m.Uploaded descending select m).Skip(skip).Take(take);
+
+            var returned = await media.ToListAsync();
+
+            if (returned == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(returned);
+        }
+
+        [HttpGet("like")]
+        public async Task<IActionResult> GetMediabyLike([FromQuery] int skip, [FromQuery] int take)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var media = (from m in _context.Media orderby m.Like descending select m).Skip(skip).Take(take);
 
             var returned = await media.ToListAsync();
 
