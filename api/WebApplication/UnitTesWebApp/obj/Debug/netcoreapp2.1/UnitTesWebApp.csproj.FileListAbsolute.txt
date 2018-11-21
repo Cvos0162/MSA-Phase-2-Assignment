@@ -1,0 +1,17 @@
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\UnitTesWebApp.deps.json
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\UnitTesWebApp.runtimeconfig.json
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\UnitTesWebApp.runtimeconfig.dev.json
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\UnitTesWebApp.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\WebApplication.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\WebApplication.pdb
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\obj\Debug\netcoreapp2.1\UnitTesWebApp.csprojAssemblyReference.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\obj\Debug\netcoreapp2.1\UnitTesWebApp.csproj.CoreCompileInputs.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\obj\Debug\netcoreapp2.1\UnitTesWebApp.AssemblyInfoInputs.cache
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\obj\Debug\netcoreapp2.1\UnitTesWebApp.AssemblyInfo.cs
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\obj\Debug\netcoreapp2.1\UnitTesWebApp.csproj.CopyComplete
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\bin\Debug\netcoreapp2.1\UnitTesWebApp.pdb
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\obj\Debug\netcoreapp2.1\UnitTesWebApp.dll
+C:\Users\znzls\Desktop\In Ha Ryu\api\WebApplication\UnitTesWebApp\obj\Debug\netcoreapp2.1\UnitTesWebApp.pdb

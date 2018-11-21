@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication.Models;
 
-namespace WebApplication.Migrations.Media
+namespace WebApplication.Migrations
 {
-    [DbContext(typeof(MediaContext))]
-    [Migration("20181118101554_InitialCreate")]
+    [DbContext(typeof(ProfileContext))]
+    [Migration("20181121024453_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,28 +17,34 @@ namespace WebApplication.Migrations.Media
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
-            modelBuilder.Entity("WebApplication.Models.Media", b =>
+            modelBuilder.Entity("WebApplication.Models.Profile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Discription");
 
+                    b.Property<string>("Email");
+
+                    b.Property<string>("First_Name");
+
                     b.Property<string>("Height");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Last_Name");
+
+                    b.Property<string>("Password");
 
                     b.Property<string>("Uploaded");
 
-                    b.Property<string>("Uploader");
-
                     b.Property<string>("Url");
+
+                    b.Property<string>("Username");
 
                     b.Property<string>("Width");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Media");
+                    b.ToTable("Profile");
                 });
 #pragma warning restore 612, 618
         }

@@ -61,9 +61,29 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var media = (from p in _context.Profile where (p.Username == username) select p).Distinct();
+            var profile = (from p in _context.Profile where (p.Username == username) select p).Distinct();
 
-            var returned = await media.ToListAsync();
+            var returned = await profile.ToListAsync();
+
+            if (returned == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(returned);
+        }
+
+        // GET: api/Profile/login
+        [HttpGet("login")]
+        public async Task<IActionResult> GetLogin([FromQuery] string username, [FromQuery] string password)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var profile = (from p in _context.Profile where (p.Username == username) && (p.Password == password) select p).Distinct();
+
+            var returned = await profile.ToListAsync();
 
             if (returned == null)
             {

@@ -50,6 +50,7 @@ namespace WebApplication.Models
                     new Profile
                     {
                         Username = "cookys0162",
+                        Password = "Alis1328",
                         First_Name = "In Ha",
                         Last_Name = "Ryu",
                         Discription = "Developer of this webapp",
