@@ -7,8 +7,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import LockIcon from '@material-ui/icons/LockOutlined';
+import SignUpIcon from '@material-ui/icons/PersonAdd'
 
 import { createStyles } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
@@ -25,6 +26,12 @@ const styles = (theme: Theme) => createStyles({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
+  },
+  name: {
+    width: '75%',
+  },
+  nameDiv: {
+    display: 'inline',
   },
   paper: {
     marginTop: theme.spacing.unit * 8,
@@ -47,24 +54,39 @@ const styles = (theme: Theme) => createStyles({
 });
 
 interface IProps extends WithStyles<typeof styles> {
-  loginHandle: any
-  failed: boolean
+  signUpHandle: any
 }
 
 interface IState {
   username: string
   password: string
+  first_Name: string
+  last_Name: string
+  discription: string
+  email: string
+  image: any
+  
 }
 
-class Login extends React.Component<IProps, IState > {
+class SignUp extends React.Component<IProps, IState > {
   constructor(props: any) {
     super(props)
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      first_Name: '',
+      last_Name: '',
+      discription: '',
+      email: '',
+      image: {}
     }
     this.handleUsername = this.handleUsername.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
+    this.handleFirstname = this.handleFirstname.bind(this)
+    this.handleLastname = this.handleLastname.bind(this)
+    this.handleDiscription = this.handleDiscription.bind(this)
+    this.handleEmail = this.handleEmail.bind(this)
+    this.handleChangePicture = this.handleChangePicture.bind(this)
   }
   public render() {
     const { classes } = this.props
@@ -73,12 +95,12 @@ class Login extends React.Component<IProps, IState > {
         <CssBaseline />
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockIcon />
+            <SignUpIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
-          <form className={classes.form} onSubmit={this.props.loginHandle(this.state.username, this.state.password)}>
+          <form className={classes.form} onSubmit={this.props.signUpHandle(this.state.username, this.state.password, this.state.first_Name, this.state.last_Name, this.state.discription, this.state.email, this.state.image)}>
             <FormControl margin="normal" required={true} fullWidth={true}>
               <InputLabel htmlFor="username">Username</InputLabel>
               <Input id="username" name="username" autoComplete="username" autoFocus={true} onChange={this.handleUsername} />
@@ -87,7 +109,33 @@ class Login extends React.Component<IProps, IState > {
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handlePassword}/>
             </FormControl>
-            {this.onFail()}
+            <div className={this.props.classes.nameDiv} >
+            <FormControl margin="normal" required={false} fullWidth={false}>
+              <InputLabel htmlFor="Firstname">Firstname</InputLabel>
+              <Input className={this.props.classes.name} name="firstname" type="firstname" id="firstname" autoComplete="firstname" onChange={this.handleFirstname}/>
+            </FormControl>
+            <FormControl margin="normal" required={false} fullWidth={false}>
+              <InputLabel htmlFor="Lastname">Lastname</InputLabel>
+              <Input className={this.props.classes.name} name="lastname" type="lastname" id="lastname" autoComplete="lastname" onChange={this.handleLastname}/>
+            </FormControl>
+            </div>
+            <TextField
+                id="filled-multiline-static"
+                label="Description"
+                multiline={true}
+                rows="4"
+                margin="normal"
+                variant="filled"
+                fullWidth={true}
+                value={this.state.discription}
+                onChange={this.handleDiscription}
+                required={false}
+            />
+            <FormControl margin="normal" required={false} fullWidth={true}>
+              <InputLabel htmlFor="Email">Email</InputLabel>
+              <Input name="email" type="email" id="email" autoComplete="email" onChange={this.handleEmail}/>
+            </FormControl>
+            <input type='file' accept='image/*' id='single' required={true} onChange={this.handleChangePicture} /> 
             <Button
               type="submit"
               fullWidth={true}
@@ -102,25 +150,30 @@ class Login extends React.Component<IProps, IState > {
       </main>
     );
   }
-  private onFail() {
-    if (this.props.failed) {
-      return (
-        <Typography component="body1" variant="body1" color="error">
-                {"* The combination of credentials you have entered is incorrect."}
-                {" Please check that you have entered a valid username and correct password."}
-              </Typography>
-      )
-    } else {
-      return null
-    }
-    
-  }
+
   private handleUsername(event:any) {
     this.setState({username: event.target.value});
   }
   private handlePassword(event:any) {
     this.setState({password: event.target.value});
   }
+  private handleFirstname(event:any) {
+    this.setState({first_Name: event.target.value});
+  }
+  private handleLastname(event:any) {
+    this.setState({last_Name: event.target.value});
+  }
+  private handleDiscription(event:any) {
+    this.setState({discription: event.target.value});
+  }
+  private handleEmail(event:any) {
+    this.setState({email: event.target.value});
+  }
+  private handleChangePicture(fileList:any) {
+    this.setState({
+        image: fileList.target.files
+    })
+  }
 }
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(SignUp);

@@ -12,10 +12,6 @@ const styles = (theme: Theme) => createStyles({
   avatar: {
     margin: 10,
   },
-  bigAvatar: {
-    width: 60,
-    height: 60,
-  },
 });
 
 interface IProps extends WithStyles<typeof styles>{
@@ -36,12 +32,17 @@ class ImageAvatars extends React.Component<IProps, IState > {
     }
     public render(){
         const { classes } = this.props;
-        return (
-            <Avatar alt={defaultPic} src={this.state.url} className={classes.avatar} />
-        )
+        this.getUploader(this.props.uploader)
+        if (this.state.url === undefined || this.state.url === "") {
+            return <Avatar src={defaultPic} className={classes.avatar} />
+        } else {
+            return (
+                <Avatar src={this.state.url} className={classes.avatar} />
+            )
+        }        
     }
     private getUploader(username: string) {
-        let url = "https://iryu.azurewebsites.net/api/Profile"
+        let url = "https://potapi.azurewebsites.net/api/Profile"
         if (username != null) {
             url += "/by?username=" + username
         }
@@ -52,7 +53,7 @@ class ImageAvatars extends React.Component<IProps, IState > {
           .then(res => {
             let p = res[0]
       if (p === undefined) {
-        p = {"id": 0, "username": "", "first_Name": "", "last_Name": "", "discription": "", "email": "","url": "", "uploaded": "", "width": "", "height": ""}
+        p = {"id": 0, "username": "", "password": "", "first_Name": "", "last_Name": "", "discription": "", "email": "","url": "", "uploaded": "", "width": "", "height": ""}
       }
       this.setState({
         url: p.url
