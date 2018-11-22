@@ -176,7 +176,7 @@ namespace WebApplication.Controllers
                     _context.Profile.Update(profile);
                     await _context.SaveChangesAsync();
 
-                    return Ok($"Profile picture of {profile.Username} has successfully uploaded");
+                    return Ok(profile);
                 }
             }
             catch (Exception ex)
