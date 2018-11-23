@@ -1,9 +1,11 @@
 import * as React from 'react';
+import * as Webcam from "react-webcam";
 import './App.css';
 
 import Chip from '@material-ui/core/Chip';
 
 import { createStyles } from '@material-ui/core'
+import Dialog from '@material-ui/core/Dialog';
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
@@ -34,6 +36,9 @@ interface IState {
   profile: any,
   medialist: any[],
   latest: boolean,
+  authenticated: boolean,
+  refCamera: any,
+  predictionResult: any
 }
 
 class App extends React.Component<IProps, IState> {
@@ -47,6 +52,9 @@ class App extends React.Component<IProps, IState> {
       medialist: [{"id": 0, "uploader": "", "discription": "", "url": "", "uploaded": "", "width": "","height": ""}],
       my_profile: {"id": 0, "username": "", "password": "", "first_Name": "", "last_Name": "", "discription": "", "email": "","url": "", "uploaded": "", "width": "", "height": ""},
       profile: {"id": 0, "username": "", "password": "", "first_Name": "", "last_Name": "", "discription": "", "email": "","url": "", "uploaded": "", "width": "", "height": ""},
+      authenticated: false,
+      refCamera: React.createRef(),
+      predictionResult: {}
     }
     this.fetchMedia("", this.state.latest);
     this.fetchProfile = this.fetchProfile.bind(this);
@@ -57,10 +65,26 @@ class App extends React.Component<IProps, IState> {
     this.setLogin = this.setLogin.bind(this)
     this.setMyProfile = this.setMyProfile.bind(this)
     this.handleChip = this.handleChip.bind(this)
+    this.authenticate = this.authenticate.bind(this)
   }
   
   public render() {
-    return (
+	const { authenticated } = this.state
+	return (
+	
+		<div>
+		{(!authenticated) ?
+			<Dialog open={!authenticated} onClose={this.authenticate}>
+				<Webcam
+					audio={false}
+					screenshotFormat="image/jpeg"
+					ref={this.state.refCamera}
+				/>
+				<div className="row nav-row">
+					<div className="btn btn-primary bottom-button" onClick={this.authenticate}>Login</div>
+				</div>
+      </Dialog> : ""}
+      
       <div>
         <Header
           profile={this.state.profile}
@@ -71,14 +95,61 @@ class App extends React.Component<IProps, IState> {
           login={this.state.login}
           setLogin={this.setLogin}
           />
-        <div className={this.props.classes.button_root}>
-          {this.createChip()}
-        </div>
-        {this.createTable()}
-        {this.adder()}
       </div>
+          {(authenticated) ?
+              <div className="header-wrapper">
+              	<div className="container header">
+
+                    <div className={this.props.classes.button_root}>
+                      {this.createChip()}
+                    </div>
+                    {this.createTable()}
+                    {this.adder()}
+                </div>
+
+              </div>
+              : ""}
+        </div>
     );
   }
+  private authenticate() { 
+    const screenshot = this.state.refCamera.current.getScreenshot();
+  	this.getFaceRecognitionResult(screenshot);
+  }
+  private getFaceRecognitionResult(image: string) {
+    const url = "[API-ENDPOINT]"
+    if (image === null) {
+      return;
+    }
+    const base64 = require('base64-js');
+    const base64content = image.split(";")[1].split(",")[1]
+    const byteArray = base64.toByteArray(base64content);
+    fetch(url, {
+      body: byteArray,
+      headers: {
+        'cache-control': 'no-cache', 'Prediction-Key': '[API-KEY]', 'Content-Type': 'application/octet-stream'
+      },
+      method: 'POST'
+    })
+      .then((response: any) => {
+        if (!response.ok) {
+          // Error State
+          alert(response.statusText)
+        } else {
+          response.json().then((json: any) => {
+            alert(json.predictions[0])
+            this.setState({predictionResult: json.predictions[0] })
+            if (this.state.predictionResult.probability > 0.7) {
+              this.setState({authenticated: true})
+            } else {
+              this.setState({authenticated: false})
+              
+            }
+          })
+        }
+      })
+  }
+  
   
   private createTable(){
     if (this.state.loaded && this.state.medialist !== []) {
