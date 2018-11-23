@@ -8,17 +8,17 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
-namespace UnitTestMemeBank
+namespace UnitTestWebApp
 {
     [TestClass]
-    public class PutUnitTests
+    public class MediaDeleteUnitTests
     {
-        public static readonly DbContextOptions<MediaContext> options 
+        public static readonly DbContextOptions<MediaContext> options
             = new DbContextOptionsBuilder<MediaContext>()
             .UseInMemoryDatabase(databaseName: "testDatabase")
             .Options;
         public static IConfiguration configuration = null;
-        public static readonly IList<string> mediaTitles = new List<string> { "dankMeme", "dankerMeme" };
+        public static readonly IList<string> mediaTitles = new List<string> { "Title0", "Title1" };
 
         [TestInitialize]
         public void SetupDb()
@@ -52,41 +52,38 @@ namespace UnitTestMemeBank
         }
 
         [TestMethod]
-        public async Task TestPutMemeItemNoContentStatusCode()
+        public async Task TestDeleteItemNoContentStatusCode()
         {
             using (var context = new MediaContext(options))
             {
                 // Given
-                string title = "putMeme";
-                Media Item1 = context.Media.Where(x => x.Title == mediaTitles[0]).Single();
-                Item1.Title = title;
 
                 // When
                 MediaController mediaController = new MediaController(context, configuration);
-                IActionResult result = await mediaController.PutMedia(Item1.Id, Item1) as IActionResult;
+                IActionResult result = await mediaController.DeleteMedia(1) as IActionResult;
 
                 // Then
                 Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(NoContentResult));
+                Assert.IsInstanceOfType(result, typeof(OkObjectResult));
             }
         }
 
         [TestMethod]
-        public async Task TestPutMemeItemUpdate()
+        public async Task TestDeleteItemContent()
         {
             using (var context = new MediaContext(options))
             {
                 // Given
-                string title = "putMeme";
-                Media Item1 = context.Media.Where(x => x.Title == mediaTitles[0]).Single();
-                Item1.Title = title;
+                var media = await context.Media.FindAsync(1);
 
                 // When
                 MediaController mediaController = new MediaController(context, configuration);
-                IActionResult result = await mediaController.PutMedia(Item1.Id, Item1) as IActionResult;
+                IActionResult result = await mediaController.DeleteMedia(1) as IActionResult;
+                Media body = result as Media;
 
                 // Then
-                Item1 = context.Media.Where(x => x.Title == title).Single();
+                Assert.IsNotNull(result);
+                Assert.AreEqual(media, body);
             }
         }
         // TODO: make unit test for all cases
