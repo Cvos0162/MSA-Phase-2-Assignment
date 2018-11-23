@@ -22,9 +22,10 @@ import Profile from './Profile';
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    position: 'fixed',
+    position: 'sticky',
+    top: 0,
     width: '100%',
-    zIndex:20
+    zIndex:20,
   },
   grow: {
     flexGrow: 1,
@@ -175,6 +176,7 @@ class Header extends React.Component<IProps,IState> {
     this.setState({
       open: b
     })
+    this.reloadLogin()
   }
   private toggleSearch = (b:boolean) => () => {
     this.setState({
@@ -227,7 +229,6 @@ class Header extends React.Component<IProps,IState> {
     this.setState({
       openSearch: false
     })
-    setTimeout(this.props.searchMedia(username).bind(this), 0)
     event.preventDefault()
   }
   private subHeader() {
@@ -326,7 +327,6 @@ class Header extends React.Component<IProps,IState> {
       }
     })
     
-    setTimeout(this.reloadLogin.bind(this), 500)
     event.preventDefault()
   }
   private editProfile = (firstName: string, lastName: string, description: string, email: string) => (event:any) => {
@@ -385,8 +385,27 @@ class Header extends React.Component<IProps,IState> {
       })
     }
     
-    setTimeout(this.reloadLogin.bind(this), 500)
     event.preventDefault()
+  }
+  private reloadLogin() {
+    let url1 = "https://potapi.azurewebsites.net/api/Profile/login"
+    url1 += "?username=" + this.props.my_profile.username + "&password=" + this.props.my_profile.password
+    fetch(url1, {
+      method: 'GET',
+    })
+    .then(res => res.json())
+    .then(res => {
+      const m = res[0]
+      if (m === undefined) {
+        this.props.setMyProfile({})
+      } else {
+        this.setState({
+          failed: false
+        })
+        this.props.setMyProfile(m)
+        this.props.setLogin(true)
+      }
+    })
   }
   private uploadProfilePic = (picture: any)  => (event:any) => {
     if (picture !== {} && picture !== null && picture !== undefined) {
@@ -406,41 +425,16 @@ class Header extends React.Component<IProps,IState> {
         }
         const r = response.json()[0]
         if (r !== undefined) {
-          this.setState({
-            failed: false,
-            open: false
-          })
           this.props.setMyProfile(r)
           this.props.setLogin(true)
         }
-      })
-    }
-    setTimeout(this.reloadLogin.bind(this), 500)
-    event.preventDefault()
-  }
-  private reloadLogin() {
-    let url1 = "https://potapi.azurewebsites.net/api/Profile/login"
-    url1 += "?username=" + this.props.my_profile.username + "&password=" + this.props.my_profile.password
-    fetch(url1, {
-      method: 'GET',
-    })
-    .then(res => res.json())
-    .then(res => {
-      const m = res[0]
-      if (m === undefined) {
-        this.setState({
-          failed: true,
-        })
-        this.props.setMyProfile({})
-      } else {
         this.setState({
           failed: false,
           open: false
         })
-        this.props.setMyProfile(m)
-        this.props.setLogin(true)
-      }
-    })
+      })
+    }
+    event.preventDefault()
   }
   private logOut(event:any) {
     this.setState({

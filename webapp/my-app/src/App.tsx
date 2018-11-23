@@ -2,7 +2,6 @@ import * as React from 'react';
 import './App.css';
 
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
 
 import { createStyles } from '@material-ui/core'
 import { Theme } from '@material-ui/core/styles/createMuiTheme'
@@ -10,15 +9,18 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import Header from './components/Header';
 import Media from './components/Media';
-import MediaAdd from './components/MediaAdd'
+import MediaAdd from './components/MediaAdd';
 
 const styles = (theme: Theme) => createStyles({
   paper: {
     width: '100%',
     height: 60
   },
+  button_root: {
+    padding: 10,
+  },
   chip: {
-
+    position: 'relative',
   }
 });
 
@@ -31,7 +33,7 @@ interface IState {
   my_profile: any,
   profile: any,
   medialist: any[],
-  latest: boolean
+  latest: boolean,
 }
 
 class App extends React.Component<IProps, IState> {
@@ -45,9 +47,8 @@ class App extends React.Component<IProps, IState> {
       medialist: [{"id": 0, "uploader": "", "discription": "", "url": "", "uploaded": "", "width": "","height": ""}],
       my_profile: {"id": 0, "username": "", "password": "", "first_Name": "", "last_Name": "", "discription": "", "email": "","url": "", "uploaded": "", "width": "", "height": ""},
       profile: {"id": 0, "username": "", "password": "", "first_Name": "", "last_Name": "", "discription": "", "email": "","url": "", "uploaded": "", "width": "", "height": ""},
-      
     }
-    this.fetchMedia("");
+    this.fetchMedia("", this.state.latest);
     this.fetchProfile = this.fetchProfile.bind(this);
     this.fetchMedia = this.fetchMedia.bind(this);
     this.updateMedia = this.updateMedia.bind(this);
@@ -70,45 +71,56 @@ class App extends React.Component<IProps, IState> {
           login={this.state.login}
           setLogin={this.setLogin}
           />
-        <Paper className={this.props.classes.paper}/>
-        {this.createChip()}
+        <div className={this.props.classes.button_root}>
+          {this.createChip()}
+        </div>
         {this.createTable()}
         {this.adder()}
       </div>
     );
   }
+  
   private createTable(){
-    const table:any[] = []
-    this.state.medialist.forEach(element => {
-      table.push(<Media
-        media={element}
-        loaded={true}
-        updateMedia={this.updateMedia}
-        handleProfileClick={this.handleProfileClick}
+    if (this.state.loaded && this.state.medialist !== []) {
+      const table:any[] = []
+      this.state.medialist.forEach(element => {
+        table.push(<Media
+          media={element}
+          loaded={true}
+          updateMedia={this.updateMedia}
+          handleProfileClick={this.handleProfileClick}
         />)
     });
-    return table
+      return table
+    } else {
+      return null;
+    }
   }
   private createChip() {
-    let b: string
+    let t: string
+    let b: boolean
     if (this.state.latest) {
-      b = "Order by Latest"
+      t = "Order by Latest"
+      b = false
     } else {
-      b = "Order by Like"
+      t = "Order by Like"
+      b = true
     }
     if ( this.state.profile === undefined || this.state.profile.id === 0) {
       return (
-        <Chip label={b} className={this.props.classes.chip} onClick={this.handleChip}/>
+        <Chip label={t} className={this.props.classes.chip} onClick={this.handleChip(b)}/>
         )
     } else {
       return null;
     } 
   }
-  private handleChip() {
+  private handleChip = (b:boolean) => (event:any) => {
     this.setState({
-      latest: !this.state.latest
+      loaded: false,
+      latest: b,
+      medialist: []
     })
-    this.fetchMedia('')
+    this.fetchMedia('', b)
   }
   private adder() {
     if (this.state.login === false) {
@@ -149,30 +161,28 @@ class App extends React.Component<IProps, IState> {
         profile: p
       })
     })
-    this.forceUpdate()
   }
   private handleProfileClick = (username: string) => (event: any) => {
     this.fetchProfile(username)
-    this.fetchMedia(username)
+    this.fetchMedia(username, true)
   }
   private handleHeaderClick(event:any) {
     this.setState({
       profile: {"id": 0, "username": "", "password": "", "first_Name": "", "last_Name": "", "discription": "", "email": "","url": "", "uploaded": "", "width": "", "height": ""}
     })
-    this.fetchMedia('')
+    this.fetchMedia('', this.state.latest)
   }
-  private fetchMedia(username: string) {
+  private fetchMedia(username: string, latest: boolean) {
     let url = "https://potapi.azurewebsites.net/api/Media"
     if (username !== "") {
       url += "/by?uploader=" + username +"&skip=0"+"&take=5";
     } else {
-      if (this.state.latest) {
+      if (latest) {
         url += "/latest?skip=0"+"&take=5";
       } else {
         url += "/like?skip=0"+"&take=5";
       }
     }
-    
     fetch(url, {
       method: 'GET',
     })
@@ -180,20 +190,20 @@ class App extends React.Component<IProps, IState> {
     .then(res => {
       let m:any[] = res
       if (m === undefined) {
-        m = [{"id": 0, "uploader": "", "title":"", "discription": "", "like": "", "url": "", "uploaded": "", "width": "","height": ""}]
+        m = []
       }
       this.setState({
-        loaded: true,
         medialist: m,
+        loaded: true,
       })
     })
   }
   private updateMedia() {
-    this.fetchMedia(this.state.profile.username);
+    this.fetchMedia(this.state.profile.username, this.state.latest);
   }
   private searchMedia = (username: string) => (event:any) => {
     this.fetchProfile(username)
-    this.fetchMedia(username)
+    this.fetchMedia(username, this.state.latest)
   }
   private postMedia = (title: string, description: string, picture:any) => (event:any) => {
     const url = "https://potapi.azurewebsites.net/api/Media/upload"
@@ -213,9 +223,13 @@ class App extends React.Component<IProps, IState> {
         alert(response.statusText)
       }
     })
-    this.setState({open: false})
+    this.setState({
+      open: false,
+      loaded: false,
+      latest: true
+    })
     event.preventDefault()
-    this.fetchMedia('')
+    this.fetchMedia('', true);
   }
 }
 
