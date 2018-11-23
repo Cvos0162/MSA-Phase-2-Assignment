@@ -15,7 +15,6 @@ steps:
 - script: |
     npm install
     npm run build
-    npm audit fix --force
   displayName: 'npm install and build'
   
 - task: ArchiveFiles@2
