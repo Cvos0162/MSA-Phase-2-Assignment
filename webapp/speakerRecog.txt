@@ -1,0 +1,7 @@
+speaker recognition
+
+Endpoint: https://westus.api.cognitive.microsoft.com/spid/v1.0
+
+Key 1: e876d4f22e5145d7b28a2b15ff0a139a
+
+Key 2: 981e5eb487484a18baaff4438621fb62

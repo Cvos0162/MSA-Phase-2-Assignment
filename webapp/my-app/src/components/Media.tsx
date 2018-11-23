@@ -143,9 +143,8 @@ class Media extends React.Component<IProps, IStates> {
           // Error State
           alert(response.statusText)
         }
+        this.props.updateMedia()
       })
-      setTimeout(this.props.updateMedia.bind(this), 500)
-      
     }
     private likeColour() {
       if (this.state.like === true) {
